@@ -1,47 +1,40 @@
 <script setup>
-import HelloWorld from './components/HelloWorld.vue'
-import TheWelcome from './components/TheWelcome.vue'
+import { ref, computed } from 'vue';
+
+const num1 = ref(0)
+const num2 = ref(0)
+const operacao = ref('+')
+
+const resultado = computed(() => {
+  switch (operacao.value) {
+    case '+': return num1.value + num2.value
+    case '-': return num1.value - num2.value
+    case '*': return num1.value * num2.value
+    case '/': 
+      return num2.value !== 0 ? (num1.value / num2.value).toFixed(2) : 'Erro: Divisão por zero'
+    default: return 0
+  }
+})
 </script>
 
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
+  <div class="container">
+    <div class="p-5 mb-4 mt-4 bg-light rounded-3">
+      <h1 class="mb-4 font-bold text-center">Calculadora Aritmética</h1>
+      <input type="number" v-model.number="num1" class="w-full p-2 border rounded text-center" placeholder="Digite o primeiro número" />
+      <input type="number" v-model.number="num2" class="w-full p-2 border rounded " placeholder="Digite o segundo número" />
+      <select v-model="operacao" class="w-full p-2 border rounded">
+        <option value="+">Soma (+)</option>
+        <option value="-">Subtração (-)</option>
+        <option value="*">Multiplicação (*)</option>
+        <option value="/">Divisão (/)</option>
+      </select>
+      <div class="text-center mt-4">
+        <p class="text-lg">Resultado: <strong>{{ resultado }}</strong></p>
+      </div>
     </div>
-  </header>
-
-  <main>
-    <TheWelcome />
-  </main>
+  </div>
 </template>
 
 <style scoped>
-header {
-  line-height: 1.5;
-}
-
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-}
 </style>
